@@ -8,12 +8,19 @@ const createJsonStructureFromNode = (node) => {
 
   if (node.nodeType === Node.ELEMENT_NODE) {
     const jsonNode = {};
+
+    if(node.hasAttribute('id')){
+      if(node.id.includes("SVG")){
+        var id = parseInt(node.id.match(/\d+/)[0])
+        jsonNode.svg = images[id]; }
+    }
+
     // Mapping HTML tags to JSON attributes
     switch (node.tagName){
         case "BR": jsonNode.text = "\n"; break;
         case "B": jsonNode.bold = true; break;
         case "U": jsonNode.underline = true; break;
-        case "I": jsonNode.italic = true; break;
+        case "I": jsonNode.italics = true; break;
         case "STRIKE": jsonNode.strike = true; break;
         case "TH": // take advantage of fallthrough...
         case "TABLE": 
@@ -42,7 +49,7 @@ const createJsonStructureFromNode = (node) => {
                 if(node.style.textAlign){
                     jsonNode.alignment = node.style.textAlign; }
                 if(node.style.color){
-                    console.log(node, node.style.color)
+                   // console.log(node, node.style.color)
                     jsonNode.color = node.style.color; }                     
                 break;
         }
@@ -59,6 +66,68 @@ const createJsonStructureFromNode = (node) => {
     return jsonNode;
   }
 };
+
+
+
+
+/////////////////////////////////////////////////////////
+// Test if attributes are the same.
+/////////////////////////////////////////////////////////
+same=(a, b)=> { 
+  for(var prop in a){
+        if(prop!=="text" && a[prop] !== b[prop]){ return false; }
+  }
+  return true;
+}
+
+/////////////////////////////////////////////////////////
+// Simplify JSON by combining similar nodes.
+/////////////////////////////////////////////////////////
+function combineAdjacentTextNodes(data) {
+  function recursiveCombine(nodes, isText) {
+    let result = [];
+    let currentIndex = 0;
+
+    while (currentIndex < nodes.length) {
+      let currentItem = nodes[currentIndex];
+
+      if (isText && currentItem.hasOwnProperty('text') && 
+        typeof currentItem.text === 'string') {
+        let combinedText = currentItem.text;
+        let nextIndex = currentIndex + 1;
+
+        // TODO: make a condition for \n
+        while (nextIndex < nodes.length && same(currentItem, nodes[nextIndex])) {
+          combinedText += '\n' + nodes[nextIndex].text;
+          nextIndex++;
+        }
+
+        currentItem.text = combinedText        
+        result.push(currentItem);
+
+
+        currentIndex = nextIndex;
+
+      } else if (currentItem instanceof Object) {
+        // Recursively process child nodes
+        result.push(recursiveCombine(Object.values(currentItem), currentItem.hasOwnProperty('text')));
+        currentIndex++;
+
+      } else { // Preserve other items
+        result.push(currentItem);
+        currentIndex++;
+      }
+    }
+
+    return result;
+  }
+
+  return recursiveCombine(data, true);
+}
+
+
+
+
 
 /////////////////////////////////////////////////////////
 // Utility functions

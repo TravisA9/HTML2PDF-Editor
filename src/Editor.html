@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <link rel="stylesheet" type="text/css" href="editorstyles.css">
+
+    <script src="pdfmake.min.js"></script>
+    <script src="vfs_fonts.js"></script>
+    <!-- <script src="tex-mml-chtml.js"></script> -->
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js"></script> -->
+<!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script> -->
+
+  <body>
+</head>
+
+<body>
+  <div id="container" >
+
+
+    <!-- https://stackoverflow.com/questions/43778468/create-simple-text-editor-javascript -->
+<div style="height:100vh; text-align: center; width: 100%; overflow: scroll; padding:10px; box-sizing: border-box;">
+
+
+<!-- font: 400 16px/1.4 'helvetica'; -->
+  <div id="editor1" style="font-family:Helvetica; line-height:1.4; font-size:11pt;"  contenteditable="true" spellcheck="true" onclick="checkFont(event)">
+    
+
+
+
+
+    <div style="text-align: center;"><span style="font-size:25pt;"><font color="#ec8422">This is a title</font></span><br></div><div><span style="font-size:18pt;">Here is a bulleted list:&nbsp;</span><br></div><div><ul><li>Tigers&nbsp;</li><li>Lions&nbsp;</li><li>Bears&nbsp;</li></ul></div><div><span style="font-size:18pt;"><br></span></div><div><span style="font-size:18pt;">Here is an ordered list:&nbsp;</span><br></div><div><ol><li>Get two slices of bread&nbsp;</li><li>Spread peanut butter on one&nbsp;</li><li>Put jelly on the other&nbsp;</li><li>Bring the two together for a match made in heaven.&nbsp;</li></ol></div><div><br></div><div style="text-align: center;"><span style="font-size:18pt;">Here is a random paragraph&nbsp;</span></div><div style="text-align: justify;"><span style="font-size:13pt;">In 2022 alone, graduate students representing 30,000 peers at nearly a dozen institutions filed documents with the National Labor Relations Board for a union election. They include USC, Northwestern, Yale, Johns Hopkins, the University of Chicago, Boston University and the Massachusetts Institute of Technology. Caltech plans to officially kick off its organizing campaign this month, and other academic researchers are working to form unions at the University of Alaska, Western Washington University, the National Institutes of Health and such influential think tanks as the Brookings Institution and Urban Institute.&nbsp;</span><br></div><div><br></div><div>Which force is responsible for keeping the plane in the air?&nbsp;</div><div><span style="font-family:Maths">◯</span> drag&nbsp;</div><div><span style="font-family:Maths">◯</span> lift&nbsp;</div><div><span style="font-family:Maths">◯</span> weight&nbsp;</div><div><span style="font-family:Maths">◯</span> thrust&nbsp;</div><div><br></div><div>&nbsp;As the sheep came on board, we grabbed their long shaggy ___________.&nbsp;</div>
+<table style="width:100%"><tbody><tr><td><span style="font-family:Maths">◯</span> fleece</td><td><span style="font-family:Maths">◯</span> ears</td></tr><tr><td><span style="font-family:Maths">◯</span> hair</td><td><span style="font-family:Maths">◯</span> eyelashes</td></tr></tbody></table><br>
+    
+<div><br></div><div style="text-align: center;"><span style="font-size:20pt">Ode To Pink Bouncy Pigs</span><br></div><div style="text-align: right;"><span style="font-size:10pt"><b><font color="#808080"><i>By ChatGPT</i></font></b></span><br></div><div style="text-align: center;">Pink pigs that bounce with glee</div><div style="text-align: center;">In fields of green, so wild and free</div><div style="text-align: center;">With snouts that root and tails that wag</div><div style="text-align: center;">They frolic, never feeling drag</div><div style="text-align: center;"><br></div><div style="text-align: center;">Their rosy hue, a sight to see</div><div style="text-align: center;">A joyful pink, as bright as can be</div><div style="text-align: center;">With snuffling snouts and curly tails</div><div style="text-align: center;">They are the epitome of fun, never fails</div><div style="text-align: center;"><br></div><div style="text-align: center;">Oh pink pigs, so bouncy and gay</div><div style="text-align: center;">You bring a smile to every day</div><div style="text-align: center;">With your playful antics, we can't help but grin</div><div style="text-align: center;">Pink pigs, we love you, we'll never tire of you, our pink bouncy kin.<span style="text-align: start;">&nbsp;</span><span style="font-size:10pt"><b><font color="#808080"><i><br></i></font></b></span></div>
+
+
+
+
+</div>  <!-- page container -->
+  <div id="shaddow" style="display:none;"></div>
+
+
+
+ <div id="controls">
+        
+    <div class="group focus">
+      <button class="square italic" onclick="document.execCommand('italic',false,null);" title="Italicize Highlighted Text"></button>
+      <button class="square bold" onclick="document.execCommand( 'bold',false,null);" title="Bold Highlighted Text"></button>
+      <button class="square underline" onclick="document.execCommand( 'underline',false,null);"></button>
+
+      <button class="square strikethrough" onclick="document.execCommand( 'strikethrough',false,null);"></button>
+    </div><br>
+        <div class="group">
+      <button class="square align-left" onclick="document.execCommand( 'justifyLeft',false,null);"></button>
+      <button class="square align-center" onclick="document.execCommand( 'justifyCenter',false,null);"></button>
+      <button class="square align-right" onclick="document.execCommand( 'justifyRight',false,null);"></button>
+      <button class="square justify" onclick="document.execCommand( 'justifyFull',false,null);"></button>
+
+    </div><br>
+      <button class="square redo-apply" onclick="document.execCommand( 'redo',false,null);"></button>
+      <button class="square undo-apply" onclick="document.execCommand( 'undo',false,null);"></button>
+      <div class="group">
+      <button class="square orderedlist" onclick="document.execCommand('insertOrderedList', false, null);"></button>
+      <button class="square unorderedlist" onclick="document.execCommand('insertUnorderedList',false, null)"></button>    
+      </div><br>
+
+      <button class="square columns" onclick="columns(2)"></button> 
+      <br>
+
+
+
+      <input class="color-apply" type="color" onchange="chooseColor()" id="myColor"> 
+
+      <!-- font size start -->
+      <select id="fontSize" onchange="changeSize()">
+        <option value="11">11pt</option>      
+        <option value="12">12pt</option>
+        <option value="13">13pt</option>
+        <option value="15">15pt</option>
+        <option value="18">18pt</option>
+        <option value="20">20pt</option>
+        <option value="22">22pt</option>
+        <option value="25">25pt</option>
+      </select><br>
+      <!-- font size end -->
+          <select id="input-font" class="input"  onchange="changeFont(this);">
+            <option value="">Select</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Courier">Courier</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Courier">Courier</option>
+            <option value="Times-Roman">Times-Roman</option>
+            <option value="Wingdings">Wingdings</option>
+            <option value="Maths">Maths</option>
+            <option value="Symbol">Symbol</option>
+      </select>  
+      <br>
+<button onclick="downloadPdf()" >Convert to PDF</button>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<!-- <button onclick="convert()">Convert content to JSON</button> -->
+<!-- <br>
+<pre id="output" style="overflow: hidden; max-width: 600px; font-size: 9px; border:thin solid grey; border-radius:5px; padding:10px;display: inline-block; margin:15px; background-color:white;"></pre> -->
+
+
+</body>
+<script type="text/javascript" src="ParseHtml.js"></script>
+<script type="text/javascript">
+$=(x)=>document.getElementById(x)
+
+
+function checkFont(event){
+    event.stopPropagation()
+    const compStyles = window.getComputedStyle(event.target);
+    // compStyles.getPropertyValue("font-size")
+    // compStyles.getPropertyValue("line-height",  )
+    $('input-font').value = compStyles.getPropertyValue("font-family")
+    var pt = Math.round((3/4)* parseInt(compStyles.getPropertyValue("font-size")))
+    $('fontSize').value = pt
+    console.log(pt)
+    // event.target.style.fontFamily
+    
+}
+
+
+
+
+
+
+// Create a span element with a given style
+// TODO: conserve existing style attributes and 
+//       ...possibly replace parent element.
+function style(type, attr){
+    document.execCommand( "copy", false, "" );
+    var text = window.getSelection().toString();
+    if(text){ 
+        document.execCommand('insertHTML', false,`<${type} style="${attr}">${text}</${type}>`);
+    }
+}
+
+// Same as above but div instead of span
+function block(attr){
+    document.execCommand( "copy", false, "" );
+    var text = window.getSelection().toString();
+    if(text){ 
+        document.execCommand('insertHTML', false,`<div style="${attr}">${text}</div>`);
+    }
+}
+
+$=(x)=>document.getElementById(x)
+// https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+function chooseColor(){
+  var mycolor = $("myColor").value;
+  document.execCommand('foreColor', false, mycolor);
+}
+
+function justify(){
+  var mysize = $("fontSize").value;
+    style("span", `text-align: justify;`)
+}
+
+function columns(num){
+  var mysize = $("fontSize").value; 
+    style("div", `column-count: ${num}; display:inline-block; min-height:10px; column-gap: 40px;`)
+}
+
+function changeSize(){
+  var mysize = $("fontSize").value;
+    style("span", `font-size:${mysize}pt;`)
+}
+
+function changeFont(){
+  var myFont = $("input-font").value;
+  style("span", `font-family:${myFont};`)
+}
+
+// Not sure... maybe junk code.
+function checkDiv(){
+  var editorText = $("editor1").innerHTML;
+  if(editorText === ''){
+    $("editor1").style.border = '5px solid red';
+  }
+}
+
+
+
+
+
+
+
+
+function removeBorder(){
+  $("editor1").style.border = '1px solid transparent';
+}
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+json = []
+function convert(){
+    // Get the document data
+    var data = document.querySelector('#editor1');
+
+    // Preproccessing...
+    // We will make some changes to the document due to PDF's lack of
+    // support for web-safe fonts. To do this and yet avoid changing
+    // the original, we will make a hidden copy of the document to 
+    // modify.
+    data = data.innerHTML.replace(/◯/g, '0');
+    data = data.replace(/[\r\n]+/g, '');
+    $('shaddow').innerHTML = data
+    var hiddenNode = document.querySelector('#shaddow');
+    
+    
+
+
+    json = createJsonStructureFromNode(hiddenNode);
+    transformJson(json)
+    //textSimplify(json);
+    json = json.text // Get rid of the root node.
+
+}
+
+///////////////////////////////////////////////////////////////////////////
+// window.pdfMake.vfs["Courier-Regular-Font.ttf"] = "BASE 64 HERE";
+
+
+pdfMake.fonts = {
+  Roboto: {
+    normal: "Roboto-Regular.ttf",
+    bold: "Roboto-Medium.ttf",
+    italics: "Roboto-Italic.ttf",
+    bolditalics: "Roboto-MediumItalic.ttf",
+  },
+    Courier: {
+    normal:      'CourierPrime-Regular.ttf',
+    bold:        'CourierPrime-Bold.ttf',
+    italics:     'CourierPrime-Italic.ttf',
+    bolditalics: 'CourierPrime-BoldItalic.ttf'
+  },
+  Helvetica: {
+    normal: 'Helvetica.ttf',
+    bold: 'Helvetica-Bold.ttf',
+    italics: 'Helvetica-Italic.ttf',
+    bolditalics: 'Helvetica-BoldItalic.ttf'
+  },
+
+  Times: {
+    normal: 'Times-Roman.ttf',
+    bold: 'Times-Bold.ttf',
+    italics: 'Times-Italic.ttf',
+    bolditalics: 'Times-BoldItalic.ttf'
+  },
+  Maths: {
+    normal: 'Maths.ttf'
+  },  
+  Wingdings: {
+    normal: 'Wingdings-Regular-Font.ttf'
+  },
+  Symbol: {
+    normal: 'Symbol.ttf'
+  },
+  ZapfDingbats: {
+    normal: 'ZapfDingbats'
+  }
+};
+
+
+///////////////////////////////////////////////////////////////////////////
+function downloadPdf() {
+
+        convert()
+
+        var docDefinition = {
+
+            footer: function(currentPage, pageCount) { 
+                return {text: 'MIA  -  ' + currentPage.toString() + ' / ' + pageCount, alignment: 'right',
+                    margin: [0, 18, 18, 0],
+                  color: '#333333'
+            }; },
+
+
+
+          content: [...json,
+            { text: 'Insert lorem. And ipsum',
+                    background: ['stripe45d', 'gray'] },
+            // vector: {
+            //   type: 'rect',
+            //   x: 10, y: 250, w: 50, h: 30,
+            //   color: ['stripe45d', 'blue'],
+            // },
+
+            {svg: '<svg width="256" height="256" viewBox="0 0 256 256" preserveAspectRatio="xMinYMin meet"><path d="M255.96 134.393c0-21.521-13.373-40.117-33.223-47.43a75.239 75.239 0 0 0 1.253-13.791c0-39.909-32.386-72.295-72.295-72.295-23.193 0-44.923 11.074-58.505 30.088-6.686-5.224-14.835-7.94-23.402-7.94-21.104 0-38.446 17.133-38.446 38.446 0 4.597.836 9.194 2.298 13.373C13.582 81.739 0 100.962 0 122.274c0 21.522 13.373 40.327 33.431 47.64-.835 4.388-1.253 8.985-1.253 13.79 0 39.7 32.386 72.087 72.086 72.087 23.402 0 44.924-11.283 58.505-30.088 6.686 5.223 15.044 8.149 23.611 8.149 21.104 0 38.446-17.134 38.446-38.446 0-4.597-.836-9.194-2.298-13.373 19.64-7.104 33.431-26.327 33.431-47.64z" fill="#FFF"/><path d="M100.085 110.364l57.043 26.119 57.669-50.565a64.312 64.312 0 0 0 1.253-12.746c0-35.52-28.834-64.355-64.355-64.355-21.313 0-41.162 10.447-53.072 27.998l-9.612 49.73 11.074 23.82z" fill="#F4BD19"/><path d="M40.953 170.75c-.835 4.179-1.253 8.567-1.253 12.955 0 35.52 29.043 64.564 64.564 64.564 21.522 0 41.372-10.656 53.49-28.208l9.403-49.729-12.746-24.238-57.251-26.118-56.207 50.774z" fill="#3CBEB1"/><path d="M40.536 71.918l39.073 9.194 8.775-44.506c-5.432-4.179-11.91-6.268-18.805-6.268-16.925 0-30.924 13.79-30.924 30.924 0 3.552.627 7.313 1.88 10.656z" fill="#E9478C"/><path d="M37.192 81.32c-17.551 5.642-29.67 22.567-29.67 40.954 0 17.97 11.074 34.059 27.79 40.327l54.953-49.73-10.03-21.52-43.043-10.03z" fill="#2C458F"/><path d="M167.784 219.852c5.432 4.18 11.91 6.478 18.596 6.478 16.925 0 30.924-13.79 30.924-30.924 0-3.761-.627-7.314-1.88-10.657l-39.073-9.193-8.567 44.296z" fill="#95C63D"/><path d="M175.724 165.317l43.043 10.03c17.551-5.85 29.67-22.566 29.67-40.954 0-17.97-11.074-33.849-27.79-40.326l-56.415 49.311 11.492 21.94z" fill="#176655"/></svg>'},
+                        
+
+            ],
+patterns: {
+    stripe45d: {
+      boundingBox: [1, 1, 4, 4],
+      xStep: 3,
+      yStep: 3,
+      pattern: "1 w 0 1 m 4 5 l s 2 0 m 5 3 l s",
+    },
+  },
+
+
+  defaultStyle: {
+    font: 'Helvetica',
+    fontSize: 14,
+    lineHeight: 1.2,
+  },
+
+            styles: {
+                header: {
+                  font:'Helvetica',
+                  fontSize: 22,
+                  bold: true,
+                  lineHeight: 1.7
+                },
+                header2: {
+                  font:'Helvetica',
+                  fontSize: 16,
+                  bold: true,
+                  lineHeight: 1.5,
+                  alignment: 'center'
+                },
+                body:{
+                  fontSize: 14,
+                  lineHeight: 1.2, 
+                  preserveLeadingSpaces: true,
+                },
+                link: {
+                  preserveLeadingSpaces: true,
+                  fontSize: 14,
+                  italics: true,
+                  bold: true,
+                  lineHeight: 1.5,
+                  color: '#ff5500',
+                  decoration: 'underline', 
+                }
+            },
+              defaultStyle: {
+                font: 'Roboto'
+              }
+        };
+
+        // Create the PDF
+        pdfMake.createPdf(docDefinition).open();
+
+
+}
+
+
+
+</script>
+
+
+</html>

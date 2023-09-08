@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+
+	<button onclick="simplifyHTML(el)">Run</button>
+<div id="editor1" style="font-size:25pt; line-height:1.5;">
+<div style="text-align: center; font-size:25pt;">
+	<span style="font-size:25pt; color:orange;">
+		<span style="color:orange;">This is a title</span>
+	</span>
+	<br>
+</div>
+</body>
+</div>
+
+<script type="text/javascript">
+$=(x)=>	document.getElementById(x);
+
+///////////////////////////////////////////////////////////
+// Depth-first traversal of DOM tree.
+///////////////////////////////////////////////////////////
+function traverseDOM(node){
+  if (node.nodeType === Node.ELEMENT_NODE){
+    for (const childNode of node.children) {
+     	traverseDOM(childNode);
+
+     	// lineBreak(node)
+    	removeRedundantStyles(node, childNode);
+    	removeRedundantNodes(node, childNode)
+    }
+  }
+}
+///////////////////////////////////////////////////////////
+// If a line break is before a closing tag put it after.
+///////////////////////////////////////////////////////////
+function lineBreak(parent){
+	if(parent.lastElementChild.tagName === "BR"){
+		console.log("Remove: ", parent.lastElementChild.tagName)
+		parent.removeChild(parent.lastElementChild);
+		let br = document.createElement('br');
+		parent.parentNode.insertBefore(br, parent.nextSibling);
+	}
+}
+///////////////////////////////////////////////////////////
+// Remove redundant styles.
+///////////////////////////////////////////////////////////
+function removeRedundantStyles(parent, child){
+  const computedStyle1 = getComputedStyle(parent);
+  const computedStyle2 = getComputedStyle(child);
+  // Check if both elements have a style attribute and they are equal
+	for(const key of child.style){
+	  if(computedStyle1[key] === computedStyle2[key]){
+	  	console.log("Remove: ", computedStyle2[key])
+	    child.style.removeProperty(key);
+	  }
+	}	
+}
+///////////////////////////////////////////////////////////
+// Remove redundant nested nodes.
+///////////////////////////////////////////////////////////
+function removeRedundantNodes(parent, child){
+	if((parent.tagName=="SPAN" || parent.tagName=="DIV") && 
+		child.tagName=="SPAN" &&
+		parent.innerText == child.innerText){
+		for(const key of child.style){
+		  parent.style[key] = child.style[key];
+		}
+		parent.innerHTML = child.innerHTML
+	}
+
+}
+
+
+// <div style="font-size: 18pt;"></div>
+const el = $("editor1");
+traverseDOM(el);
+
+
+</script>
+</html>
+
